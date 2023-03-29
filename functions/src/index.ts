@@ -1,0 +1,1 @@
+export { slackbot } from './slackbot'

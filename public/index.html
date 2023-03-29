@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GPT Bot — your new coworker</title>
+  <link rel="icon" href="https://avatars.slack-edge.com/2023-03-22/4986866885334_52fc2026b9c038518178_96.png"
+    type="image/png">
+  <meta name="description" content="GPT Bot — your new coworker">
+  <meta name="slack-app-id" content="A04V783DY2X">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="grid place-items-center w-full p-4 bg-fuchsia-100">
+  <div class="max-w-lg flex flex-col gap-4">
+    <section id="header" class="w-full rounded shadow bg-white p-4 flex gap-2">
+      <img class="rounded flex" data-qa="app_header_icon"
+        src="https://avatars.slack-edge.com/2023-03-22/4986866885334_52fc2026b9c038518178_96.png"
+        srcset="https://avatars.slack-edge.com/2023-03-22/4986866885334_52fc2026b9c038518178_96.png 1x, https://avatars.slack-edge.com/2023-03-22/4986866885334_52fc2026b9c038518178_192.png 2x">
+      <div class="flex flex-col w-full justify-around">
+        <h1 class="text-xl text-center">GPT Bot</h1>
+        <p class="text-gray-500 text-center">Your new coworker in Slack<br /> Ask it to do anything!</p>
+      </div>
+    </section>
+
+    <section class="grid place-items-center">
+      <a id="slack-button"
+        href="https://slack.com/oauth/v2/authorize?scope=chat%3Awrite%2Cusers%3Aread%2Ccommands%2Cim%3Ahistory%2Cim%3Awrite%2Capp_mentions%3Aread%2Cchannels%3Ahistory&amp;user_scope=&amp;redirect_uri=https%3A%2F%2Feurope-west1-gpt-bot-73f5b.cloudfunctions.net%2Fslackbot%2Foauth_redirect&amp;client_id=14948036624.4993275474099"
+        style="align-items:center;color:#fff;background-color:#4A154B;border:0;border-radius:4px;display:inline-flex;font-family:Lato, sans-serif;font-size:18px;font-weight:600;height:56px;justify-content:center;text-decoration:none;width:276px"><svg
+          xmlns="http://www.w3.org/2000/svg" style="height:24px;width:24px;margin-right:12px" viewBox="0 0 122.8 122.8">
+          <path
+            d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.5 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z"
+            fill="#e01e5a"></path>
+          <path
+            d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2zm0 6.5c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z"
+            fill="#36c5f0"></path>
+          <path
+            d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2zm-6.5 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z"
+            fill="#2eb67d"></path>
+          <path
+            d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z"
+            fill="#ecb22e"></path>
+        </svg>Add to Slack</a>
+    </section>
+
+    <section class="w-full rounded shadow bg-white p-4 flex flex-col items-center gap-2">
+      <h2 class="text-lg">How it works:</h2>
+      <ol class="list-decimal list-inside text-gray-600">
+        <li>Install bot to your Slack team</li>
+        <li>Use <code class="p-[2px] rounded bg-red-100 text-black">/set_token</code> command to setup OpenAI token</li>
+        <li>Type <code class="p-[2px] rounded bg-blue-100 text-black">@GPT bot</code> to mention in channels or threads
+        </li>
+    </section>
+
+    <div>
+      <p class="text-center">Made with ❤️ by <a href="https://p11.co" class="text-blue-500">P11</a></p>
+      <p class="text-center">We help build with AI</p>
+      <p class="text-center"><a href="/privacy.html" class="underline">Privacy</a> | <a href="/tos.html"
+          class="underline">Terms of service</a></p>
+    </div>
+
+  </div>
+</body>
+
+</html>
