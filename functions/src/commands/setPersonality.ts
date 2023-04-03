@@ -29,7 +29,7 @@ export const setPersonality: Middleware<SlackCommandMiddlewareArgs> = async ({
     return
   }
 
-  await respond(`Token set`)
+  await respond(`New bot personality: ${personality}`)
   try {
     const response = await askGPT4(
       [
@@ -44,7 +44,7 @@ export const setPersonality: Middleware<SlackCommandMiddlewareArgs> = async ({
       model,
       personality,
     )
-    await respond(response)
+    await say(response)
   } catch (error) {
     await respond(
       'Oops, something went wrong. Please check your token and try again' + `Error: ${error}`,

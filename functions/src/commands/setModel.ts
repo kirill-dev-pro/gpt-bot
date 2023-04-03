@@ -42,7 +42,8 @@ export const setModelCommand: Middleware<SlackCommandMiddlewareArgs> = async ({
       model,
       personality,
     )
-    await respond(response)
+    await respond('OpenAI model set successfully. New model: ' + model)
+    await say(response)
   } catch (error) {
     await respond('Error setting model: ' + error)
   }
