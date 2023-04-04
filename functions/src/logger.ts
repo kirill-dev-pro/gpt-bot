@@ -6,8 +6,6 @@ export class CloudLogger implements Logger {
   private level
   /** Map of labels for each log level */
   // private static labels
-  // /** Map of severity as comparable numbers for each log level */
-  // private static severity
   constructor(level: LogLevel) {
     this.level = level
   }
