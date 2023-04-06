@@ -17,6 +17,28 @@
   ],
   "hosting": {
     "public": "public",
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/install",
+        "destination": "/install.html"
+      },
+      {
+        "source": "/tos",
+        "destination": "/tos.html"
+      },
+      {
+        "source": "/privacy",
+        "destination": "/privacy.html"
+      },
+      {
+        "source": "/support",
+        "destination": "/support.html"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
