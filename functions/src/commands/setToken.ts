@@ -1,4 +1,4 @@
-import { askGPT4 } from '../ai'
+import { askAI } from '../ai'
 import { db } from '../db'
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt'
 import { logger } from 'firebase-functions/v1'
@@ -35,7 +35,7 @@ export const setTokenCommand: Middleware<SlackCommandMiddlewareArgs> = async ({
 
   await respond(`Token set`)
   try {
-    const response = await askGPT4(
+    const response = await askAI(
       [
         {
           role: 'assistant',

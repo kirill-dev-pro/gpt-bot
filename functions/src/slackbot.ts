@@ -1,15 +1,9 @@
-import { askGPT4, PromptMessage } from './ai'
+import { askAI, PromptMessage } from './ai'
 import { db } from './db'
 import { setTokenCommand, setModelCommand, setPersonality } from './commands'
 import { app, expressReceiver } from './app'
 import { logger, region } from 'firebase-functions'
 import { UsersInfoResponse } from '@slack/web-api'
-
-export type TeamConfig = {
-  token?: string
-  model?: string
-  personality?: string
-}
 
 app.use(async ({ context, next }) => {
   if (context.retryNum) {
@@ -30,13 +24,6 @@ app.event('app_mention', async ({ payload, say, context }) => {
   if (!payload.team) throw new Error('Team not found in payload')
 
   const teamId = payload.team
-  const doc = await db.collection('teams').doc(teamId!).get()
-  const { token, model, personality } = (doc.data() || {}) as TeamConfig
-
-  if (!token) {
-    await say({ text: 'Please set token first', thread_ts: payload.thread_ts || payload.ts })
-    return
-  }
 
   // get thread messages
   const threadMessages = await app.client.conversations.replies({
@@ -86,7 +73,7 @@ app.event('app_mention', async ({ payload, say, context }) => {
   // logger.log('messages', history)
 
   try {
-    const result = await askGPT4(history, token, model, personality)
+    const result = await askAI(history, teamId)
     await say({ text: result, thread_ts: payload.thread_ts || payload.ts })
   } catch (error) {
     await say({ text: (error as Error).message, thread_ts: payload.thread_ts || payload.ts })
@@ -103,18 +90,11 @@ app.message(async ({ message, say, payload, event, context }) => {
 
   const teamId = context.teamId || context.enterpriseId
   if (!teamId) throw new Error('No teamId or enterpriseId found in context')
-  const doc = await db.collection('teams').doc(teamId).get()
-  const { token, model, personality } = (doc.data() || {}) as TeamConfig
+  // const teamData = await getTeamData(teamId)
 
-  if (!token) {
-    await say({
-      text:
-        'Your bot is not configured yet\n' +
-        'You must set OpenAI api key with `/set_token` command\n' +
-        '',
-    })
-    return
-  }
+  // if (!teamData) {
+  //   return await say({ text: 'Your bot is not configured yet' })
+  // }
 
   // get messages from conversation with bot
   const messageHistory = await app.client.conversations.history({
@@ -135,7 +115,7 @@ app.message(async ({ message, say, payload, event, context }) => {
     .reverse()
 
   try {
-    const result = await askGPT4(conversation, token, model, personality)
+    const result = await askAI(conversation, teamId)
     await say({ text: result })
     return
   } catch (error) {

@@ -1,0 +1,4 @@
+{
+	"extends":"supreme",
+	"ignorePatterns": "**/lib/**/*"
+}

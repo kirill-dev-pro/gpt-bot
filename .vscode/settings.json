@@ -8,5 +8,8 @@
     "astro",
     "typescript",
     "typescriptreact"
+  ],
+  "cSpell.words": [
+    "firestore"
   ]
 }

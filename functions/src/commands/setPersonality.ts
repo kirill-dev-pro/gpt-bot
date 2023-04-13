@@ -1,6 +1,5 @@
-import { askGPT4 } from '../ai'
-import { db } from '../db'
-import { TeamConfig } from '../slackbot'
+import { askAI } from '../ai'
+import { db, getTeamData } from '../db'
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt'
 import { logger } from 'firebase-functions/v1'
 
@@ -21,17 +20,16 @@ export const setPersonality: Middleware<SlackCommandMiddlewareArgs> = async ({
     return
   }
 
-  const doc = await db.collection('teams').doc(command.team_id).get()
-  const { token, model } = doc.data() as TeamConfig
+  const teamData = await getTeamData(command.team_id)
 
-  if (!token) {
-    await respond(`Please set token first`)
+  if (!teamData) {
+    await respond(`Error setting personality: no team data`)
     return
   }
 
   await respond(`New bot personality: ${personality}`)
   try {
-    const response = await askGPT4(
+    const response = await askAI(
       [
         {
           role: 'assistant',
@@ -40,14 +38,10 @@ export const setPersonality: Middleware<SlackCommandMiddlewareArgs> = async ({
             `and tell who you are. Tell it shortly`,
         },
       ],
-      token,
-      model,
-      personality,
+      command.team_id,
     )
     await say(response)
   } catch (error) {
-    await respond(
-      'Oops, something went wrong. Please check your token and try again' + `Error: ${error}`,
-    )
+    await respond(`Error: ${error}`)
   }
 }

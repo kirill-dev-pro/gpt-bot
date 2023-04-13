@@ -1,6 +1,5 @@
-import { askGPT4 } from '../ai'
-import { db } from '../db'
-import { TeamConfig } from '../slackbot'
+import { askAI } from '../ai'
+import { db, getTeamData } from '../db'
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt'
 import { logger } from 'firebase-functions/v1'
 
@@ -20,16 +19,15 @@ export const setModelCommand: Middleware<SlackCommandMiddlewareArgs> = async ({
     return
   }
 
-  const doc = await db.collection('teams').doc(command.team_id).get()
-  const { token, personality } = doc.data() as TeamConfig
+  const teamData = await getTeamData(command.team_id)
 
-  if (!token) {
-    await respond(`Please set token first`)
+  if (!teamData?.token) {
+    await respond(`You can not change model without setting your own token first`)
     return
   }
 
   try {
-    const response = await askGPT4(
+    const response = await askAI(
       [
         {
           role: 'assistant',
@@ -38,9 +36,7 @@ export const setModelCommand: Middleware<SlackCommandMiddlewareArgs> = async ({
             `Tell it shortly\n`,
         },
       ],
-      token,
-      model,
-      personality,
+      command.team_id,
     )
     await respond('OpenAI model set successfully. New model: ' + model)
     await say(response)
